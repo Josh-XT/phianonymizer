@@ -59,3 +59,11 @@ Hello John! Thank you for sharing your information. It's great that you've provi
 Declassified response:
 Hello Bobby Smith! Thank you for sharing your information. It's great that you've provided your contact details. If you have any questions or need assistance with something related to your information, feel free to ask. I'm here to help.
 ```
+
+## Disclaimer
+
+This tool is best-effort and could still miss sensitive information. All feedback we receive will go towards improving it. Use at your own risk.
+
+## License
+
+MIT License, see [LICENSE](LICENSE) for details.
