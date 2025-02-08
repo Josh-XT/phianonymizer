@@ -21,8 +21,8 @@ class PHIMapper:
         filename: str = "*Q4_K_M.gguf",
         context_length: int = 32768,
     ):
-        self.new_key = key
-        self.new_fernet = fernet
+        self.key = key
+        self.fernet = fernet
         self.phi_map = phi_map if phi_map else {}
         self.reverse_map = reverse_map if reverse_map else {}
         self.llm = Llama.from_pretrained(
