@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-convertanything:
+  test:
     uses: ./.github/workflows/tests.yml
     with:
       additional-python-dependencies: llama-cpp-python huggingface-hub cryptography
