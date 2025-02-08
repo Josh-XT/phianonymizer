@@ -1,0 +1,13 @@
+name: Run tests
+
+on:
+  push:
+    branches: ["*"]
+  workflow_dispatch:
+
+jobs:
+  test-convertanything:
+    uses: ./.github/workflows/tests.yml
+    with:
+      additional-python-dependencies: llama-cpp-python huggingface-hub cryptography
+      clone-repo: true
