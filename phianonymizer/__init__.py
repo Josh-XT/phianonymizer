@@ -11,17 +11,18 @@ import random
 class PHIMapper:
     """Class to handle PHI mapping and encryption"""
 
-    fernet: Fernet
-    key: bytes
-
     def __init__(
         self,
+        key: bytes = Fernet.generate_key(),
+        fernet: Fernet = Fernet(Fernet.generate_key()),
         phi_map: Dict[str, str] = {},
         reverse_map: Dict[str, str] = {},
         gguf_repo_id: str = "bartowski/Qwen2.5-0.5B-Instruct-GGUF",
         filename: str = "*Q4_K_M.gguf",
         context_length: int = 32768,
     ):
+        self.new_key = key
+        self.new_fernet = fernet
         self.phi_map = phi_map if phi_map else {}
         self.reverse_map = reverse_map if reverse_map else {}
         self.llm = Llama.from_pretrained(

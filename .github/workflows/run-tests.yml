@@ -7,7 +7,32 @@ on:
 
 jobs:
   test:
-    uses: ./.github/workflows/tests.yml
-    with:
-      additional-python-dependencies: llama-cpp-python huggingface-hub cryptography
-      clone-repo: true
+    name: Tests
+    runs-on: ubuntu-latest
+    outputs:
+      digest: ${{ steps.dockerBuild.outputs.digest }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 1
+      - name: Install jupyter
+        run: pip3 install jupyter nbconvert[webpdf]
+      - name: Update package lists and install jupyter output generation dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --fix-missing -y pandoc texlive-xetex texlive-fonts-recommended texlive-plain-generic
+      - name: Clone repository and install package
+        run: |
+          git clone https://github.com/${{ github.repository }} /tmp/repo
+          cd /tmp/repo
+          pip3 install .
+      - name: Execute notebook
+        run: python3 -m nbconvert --execute --log-level DEBUG --to pdf tests.ipynb
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: test-reports.pdf
