@@ -4,16 +4,16 @@ PHI (Protected Health Information) Anonymizer is a tool designed to help you ano
 
 ## Usage
 
-### Install dependencies
+### Install
 
 ```bash
-pip install -r requirements.txt
+pip install phianonymizer
 ```
 
 ### Example usage
 
 ```python
-from __init__ import anonymize_text, deanonymize_text
+from phianonymizer import anonymize_text, deanonymize_text
 
 original_text = "Hi! My name is Bobby Smith, I was born on 01/04/1970 in New York City. My phone number is 626-433-7890 and my email is bobby.smith@gmail.com. You probably need my social security number too, it's 213-45-6919. So what have you learned about me?"
 safe_response, mapper = anonymize_text(original_text)
