@@ -17,15 +17,18 @@ class PHIMapper:
         phi_map: Dict[str, str],
         reverse_map: Dict[str, str],
         fernet: Fernet,
+        gguf_repo_id: str = "bartowski/Qwen2.5-0.5B-Instruct-GGUF",
+        filename: str = "*Q4_K_M.gguf",
+        context_length: int = 32768,
     ):
         self.key = key
         self.phi_map = phi_map
         self.reverse_map = reverse_map
         self.fernet = fernet
         self.llm = Llama.from_pretrained(
-            repo_id="bartowski/Qwen2.5-0.5B-Instruct-GGUF",
-            filename="*Q4_K_M.gguf",
-            n_ctx=32768,
+            repo_id=gguf_repo_id,
+            filename=filename,
+            n_ctx=context_length,
             verbose=False,
         )
 
@@ -276,13 +279,20 @@ Analyze the text in data and respond with only valid JSON as shown in the exampl
         self.reverse_map = map_data["reverse_map"]
 
 
-def anonymize_text(text: str) -> Tuple[str, PHIMapper]:
+def anonymize_text(
+    text: str,
+    model_repo: str = "bartowski/Qwen2.5-0.5B-Instruct-GGUF",
+    model_filename: str = "*Q4_K_M.gguf",
+) -> Tuple[str, PHIMapper]:
     """
     Main function to anonymize text containing PHI
     Returns anonymized text and PHIMapper instance
     """
     # Create new PHI mapper
-    mapper = PHIMapper.create()
+    mapper = PHIMapper(
+        gguf_repo_id=model_repo,
+        filename=model_filename,
+    ).create()
 
     # Anonymize the text
     anonymized_text = mapper.anonymize(text)

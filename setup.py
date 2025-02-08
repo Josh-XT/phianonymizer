@@ -10,7 +10,7 @@ with open(os.path.join(this_directory, "requirements.txt")) as f:
 
 setup(
     name="phianonymizer",
-    version="0.0.3",
+    version="0.0.4",
     description="A tool to anonymize data before sending to LLM providers, then re-identify the data after receiving the response.",
     long_description=long_description,
     long_description_content_type="text/markdown",
