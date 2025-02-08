@@ -5,6 +5,9 @@ this_directory = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(this_directory, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
+with open(os.path.join(this_directory, "requirements.txt")) as f:
+    requirements = f.read().splitlines()
+
 setup(
     name="phianonymizer",
     version="0.0.1",
@@ -15,9 +18,5 @@ setup(
     author_email="josh@devxt.com",
     packages=find_packages(),
     python_requires=">=3.10",
-    install_requires=[
-        "cryptography",
-        "llama-cpp-python",
-        "huggingface-hub",
-    ],
+    install_requires=requirements,
 )
