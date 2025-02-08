@@ -13,22 +13,24 @@ class PHIMapper:
 
     def __init__(
         self,
-        key: bytes,
-        phi_map: Dict[str, str],
-        reverse_map: Dict[str, str],
-        fernet: Fernet,
+        key: bytes = None,
+        phi_map: Dict[str, str] = {},
+        reverse_map: Dict[str, str] = {},
+        fernet: Fernet = None,
         gguf_repo_id: str = "bartowski/Qwen2.5-0.5B-Instruct-GGUF",
         filename: str = "*Q4_K_M.gguf",
         context_length: int = 32768,
     ):
-        self.key = key
-        self.phi_map = phi_map
-        self.reverse_map = reverse_map
-        self.fernet = fernet
+        self.key = key if key else Fernet.generate_key()
+        self.phi_map = phi_map if phi_map else {}
+        self.reverse_map = reverse_map if reverse_map else {}
+        self.fernet = fernet if fernet else Fernet(key)
         self.llm = Llama.from_pretrained(
-            repo_id=gguf_repo_id,
-            filename=filename,
-            n_ctx=context_length,
+            repo_id=(
+                gguf_repo_id if gguf_repo_id else "bartowski/Qwen2.5-0.5B-Instruct-GGUF"
+            ),
+            filename=filename if filename else "*Q4_K_M.gguf",
+            n_ctx=context_length if context_length else 32768,
             verbose=False,
         )
 
